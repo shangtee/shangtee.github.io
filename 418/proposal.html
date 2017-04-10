@@ -4,21 +4,26 @@ title: Parallellized Sequential Pattern Mining
 ---
 <div class="blurb">
     <h1>15-418 Final Project</h1>
-    <h2>TITLE</h2>
-
-    <p>Parallellized Sequential Pattern Mining</p>
-
-    <h2>TEAM</h2>
-    <p>Anna Tan</p>
+    <h2>Parallellized Sequential Pattern Mining</h2>
+    <h4>Anna Tan</h4>
+    <h3>Summary</h3>
+    <p>We are going to implement two algorithms for sequential pattern mining on multi-core CPU platforms. We would like to parallellize two common data mining algorithms, PrefixSpan and the GSP algorithm. We will evaluate the performance between the sequential implementations and the parallel implementations, as well as among the parallel implementations. </p>
+    <h3>Background</h3>
+    <p>Sequential pattern mining is used to discover statistically relevant patterns in large data sets where the data is assumed to be delivered in sequence. It is used in a wide variety of applications, including consumer behavior discovery, DNA pattern discovery, and natural language categorization.</p>
+    <p>A sequence in a sequence database is an ordered list of sets of items - it would look something like &lt;{a, b}, {c}, {a, c, d}&gt;. In this sequence, a sequential pattern can be &lt;{a}, {c}&gt;, &lt;{c}, {c, d}&gt;, or &lt;{a, b}, {c}, {d}&gt;. A sequential pattern mining algorithm takes as input a sequence database and a minimum support threshold (minsup), to output all sequential patterns having a support at least minsup. </p>
+    <p>PrefixSpan (<a href="http://ieeexplore.ieee.org/document/914830/">Pei et al.</a>) finds these sequential patterns by looking at the prefixes of each sequence and creating pattern-projected database. It appends elements to these sequential patterns one by one, and recursively call the subroutine. </p>
+    <p>The GSP algorithm(<a href="https://pdfs.semanticscholar.org/d420/ea39dc136b9e390d05e964488a65fcf6ad33.pdf">Srikant &amp; Agrawal</a>, on the other hand, generates all possible k-sequences from frequent k-1 sequences by "joining" any two sequences, and then checks how much support each of these sequences has.</p>
+    <p>Because these algorithms may all potentially explore a large number of possible subsequence patterns across a large number of sequences, they can benefit significantly from parallelism. </p>
+    <h3>The Challenge</h3>
+    <p>For the PrefixSpan algorithm, </p>
+    <h3>Goals and Deliverables</h3>
+    <p></p>
+    <h3>Platform of Choice</h3>
+    <p></p>
+    <h3>Schedule</h3>
+    <p></p>
 <!---
-SUMMARY. Summarize your project in no more than 2-3 sentences. Describe what you plan to do and what parallel systems you will be working with. Example one-liners include (you should add a bit more detail):
 
-We are going to implement an optimized Smoothed Particle Hydrodynamics fluid solver on the NVIDIA GPUs in the lab.
-We are going port the Go runtime to Blacklight.
-We are going to create optimized implementations of sparse-matrix multiplication on both GPU and multi-core CPU platforms, and perform a detailed analysis of both systems' performance characteristics.
-We are going to back-engineer the unpublished machine specifications of the GPU in the tablet my partner just purchased.
-We are going to implement two possible algorithms for a real-time computer vision application on a mobile device and measure their energy consumption in the lab.
-BACKGROUND. If your project involves accelerating a compute-intensive application, describe the application or piece of the application you are going to implement in more detail. This description need only be a few paragraphs. It might be helpful to include a block diagram or pseudocode of the basic idea. An important detail is what aspects of the problem might benefit from parallelism? and why?
 
 THE CHALLENGE. Describe why the problem is challenging. What aspects of the problem might make it difficult to parallelize? In other words, what to you hope to learn by doing the project?
 
