@@ -27,27 +27,27 @@ title: Parallellized Sequential Pattern Mining
     <p>In addition, I will be using <a href="http://www.philippe-fournier-viger.com/spmf/index.php?link=datasets.php">this list</a> of sequence datasets to test my algorithms for correctness and performance. This list provides a nice variety of databases in sizes, ranging from 800 sequences to 990 000 sequences. </p>
     <p>I will need to look into compression techniques related to sequential sequence datasets if memory limitation becomes an issue in my implementations. </p>
     <h3>Goals and Deliverables</h3>
+    <p>Plan to Achieve:</p>
     <ul>
-        <li></li>
-        <li></li>
+        <li>Create parallel implementations on multiple cores that have speedup of at least 4x, in order to have a reasonable mining time on big datasets</li>
+        <li>Present results and benchmarks on our parallel implementations' correctness and speed compared to the sequential versions on a few datasets</li>
+    </ul>
+    <p>Hope to Achieve:</p>
+    <ul>
+        <li>Implement a compression technique for large datasets</li>
+        <li>Create parallel implementations that use a cluster of machines or GPU and compare these implementations with the CPU implementations</li>
+        <li>Create parallel applications that use the data mining algorithms we have created to see how much speedup we can get for real life applications</li>
     </ul>
     <h3>Platform of Choice</h3>
-    <p>We will be using C++ as our main programming language, since we want to use OpenMP to parallelize our program. Our code will be run on the latedays cluster.</p>
+    <p>We will be using C++ as our main programming language, since we want to use OpenMP to parallelize our program. Our code will be run on the latedays cluster to take advantage of the multithreaded CPUs.</p>
     <h3>Schedule</h3>
-    <p></p>
+    <ul>
+        <li>April 11 - 18: Implement the sequential versions of the algorithms and identify parallelism</li>
+        <li>April 18 - 25: Implement the parallel versions of the algorithms</li>
+        <li>April 25 - May 2: Test the parallel algorithms on different datasets and optimize parallelism </li>
+        <li>May 2 - 9: Finalize Project Report and update site; finish analysis on data</li>
+    </ul>
 <!---
-
-
-GOALS AND DELIVERABLES. Describe the deliverables or goals of your project.
-
-This is by far the most important section of the proposal:
-
-Separate your goals into what you PLAN TO ACHIEVE (what you believe you must get done to have a successful project and get the grade you expect) and an extra goal or two that you HOPE TO ACHIEVE if the project goes really well and you get ahead of schedule. It may not be possible to state precise performance goals at this time, but we encourage you be as precise as possible. If you do state a goal, give some justification of why you think you can achieve it. (e.g., I hope to speed up my starter code 10x, because if I did it would run in real-time.)
-If applicable, describe the demo you plan to show at the parallelism computation (will it be an interactive demo? will you show an output of the program that is really neat? will you show speedup graphs?). Specifically, what will you show us that will demonstrate you did a good job?
-If your project is an analysis project, what are you hoping to learn about the workload or system being studied? What question(s) do you plan to answer in your analysis?
-Systems project proposals should describe what the system will be capable of and what performance is hoped to be achieved.
-IN GENERAL: Imagine that I didn't give you a grading script on assignments 2, 3, or 4. Imagine you did the entire assignment, made it as fast as you could, and then turned it in. You wouldn't have any idea if you'd done a good job!!! That's the situation you are in for the final project. And that's the situation I'm in when grading your final project. As part of your project plan, and ONE OF THE FIRST THINGS YOU SHOULD DO WHEN YOU GET STARTED WORKING is implement the test harnesses and/or baseline "reference" implementations for your project. Then, for the rest of your project you always have the ability to run your optimized code and obtain a comparison.
-PLATFORM CHOICE. Describe why the platform (computer and/or language) you have chosen is a good one for your needs. Why does it make sense to use this parallel system for the workload you have chosen?
 
 SCHEDULE. Produce a schedule for your project. Your schedule should have at least one item to do per week. List what you plan to get done each week from now until the parallelism competition in order to meet your project goals. Keep in mind that due to other classes, you'll have more time to work some weeks than others (work that into the schedule). You will need to re-evaluate your progress at the end of each week and update this schedule accordingly. Note the intermediate checkpoint deadline is April 25th. In your schedule we encourage you to be precise as precise as possible. It's often helpful to work backward in time from your deliverables and goals, writing down all the little things you'll need to do (establish the dependencies!).
 -->
