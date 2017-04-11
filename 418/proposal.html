@@ -12,24 +12,31 @@ title: Parallellized Sequential Pattern Mining
     <p>Sequential pattern mining is used to discover statistically relevant patterns in large data sets where the data is assumed to be delivered in sequence. It is used in a wide variety of applications, including consumer behavior discovery, DNA pattern discovery, and natural language categorization.</p>
     <p>A sequence in a sequence database is an ordered list of sets of items - it would look something like &lt;{a, b}, {c}, {a, c, d}&gt;. In this sequence, a sequential pattern can be &lt;{a}, {c}&gt;, &lt;{c}, {c, d}&gt;, or &lt;{a, b}, {c}, {d}&gt;. A sequential pattern mining algorithm takes as input a sequence database and a minimum support threshold (minsup), to output all sequential patterns having a support at least minsup. </p>
     <p>PrefixSpan (<a href="http://ieeexplore.ieee.org/document/914830/">Pei et al.</a>) finds these sequential patterns by looking at the prefixes of each sequence and creating pattern-projected database. It appends elements to these sequential patterns one by one, and recursively call the subroutine. </p>
-    <p>The GSP algorithm(<a href="https://pdfs.semanticscholar.org/d420/ea39dc136b9e390d05e964488a65fcf6ad33.pdf">Srikant &amp; Agrawal</a>, on the other hand, generates all possible k-sequences from frequent k-1 sequences by "joining" any two sequences, and then checks how much support each of these sequences has.</p>
-    <p>Because these algorithms may all potentially explore a large number of possible subsequence patterns across a large number of sequences, they can benefit significantly from parallelism. </p>
-    <h3>The Challenge</h3>
-    <p>For the PrefixSpan algorithm, </p>
+    <p>The GSP algorithm(<a href="https://pdfs.semanticscholar.org/d420/ea39dc136b9e390d05e964488a65fcf6ad33.pdf">Srikant &amp; Agrawal</a>), on the other hand, generates all possible k-sequences from frequent k-1 sequences by "joining" any two sequences, and then checks how much support each of these sequences has.</p>
+    <p>Because these algorithms may all potentially explore a large number of possible subsequence patterns across a large number of sequences, they can benefit significantly from parallelism. Often, these data mining algorithms run for very long time and bottlenecks the training and prediction phases of the actual machine learning algorithm. Since for each sequential pattern and each data point, we are doing roughly the same amount of work, we hope to exploit the data parallelism and model parallelism in these two algorithms. </p>
+    <h3>Challenges</h3>
+    <ul>
+        <li>Memory Limitation: Because the sequence database is typically very large and we are generating large sets as the algorithms run, we may have inefficient memory utilization when running on large datasets. We may want to consider compression techniques to reduce the amount of data we need to read into memory.</li>
+        <li>In both algorithms, we need to combine the support from different threads to filter out the correct frequent patterns, and then produce a final list of frequent patterns. Depending on how we distribute the workload across threads, this will require communication across threads and usage of shared memory. </li>
+        <li>The algorithms can become computationally heavy if the dataset is large, as generating possible k-sequences and projecting sequences are both done on the dataset. Joining any two sequences can also become a very large task if the number of sequences is large. </li>
+    </ul>
+    <p>For PrefixSpan, there is divergence in that not all sequences are included when creating a projected database based on some prefix sequence. The projected database also vary in size. Therefore, we need to consider balancing the workload. </p>
+    <p>For the GSP algorithm, we have less divergence in execution. The locality is high for memory access.</p>
+    <h3>Resources</h3>
+    <p>I will be using the two papers I referenced in Background as my main source of starting code. Each paper describes the sequential implementation of the algorithm. These algorithms and their parallel versions will be implemented on Gates machines, and run on lateday clusters. </p>
+    <p>In addition, I will be using <a href="http://www.philippe-fournier-viger.com/spmf/index.php?link=datasets.php">this list</a> of sequence datasets to test my algorithms for correctness and performance. This list provides a nice variety of databases in sizes, ranging from 800 sequences to 990 000 sequences. </p>
+    <p>I will need to look into compression techniques related to sequential sequence datasets if memory limitation becomes an issue in my implementations. </p>
     <h3>Goals and Deliverables</h3>
-    <p></p>
+    <ul>
+        <li></li>
+        <li></li>
+    </ul>
     <h3>Platform of Choice</h3>
-    <p></p>
+    <p>We will be using C++ as our main programming language, since we want to use OpenMP to parallelize our program. Our code will be run on the latedays cluster.</p>
     <h3>Schedule</h3>
     <p></p>
 <!---
 
-
-THE CHALLENGE. Describe why the problem is challenging. What aspects of the problem might make it difficult to parallelize? In other words, what to you hope to learn by doing the project?
-
-Describe the workload: what are the dependencies, what are its memory access characteristics? (is there locality? is there a high communication to computation ratio?), is there divergent execution?
-Describe constraints: What are the properties of the system that make mapping the workload to it challenging?
-RESOURCES. Describe the resources (type of computers, starter code, etc.) you will use. What code base will you start from? Are you starting from scratch or using an existing piece of code? Is there a book or paper that you are using as a reference (if so, provide a citation)? Are there any other resources you need, but haven't figured out how to obtain yet? Could you benefit from access to any special machines?
 
 GOALS AND DELIVERABLES. Describe the deliverables or goals of your project.
 
