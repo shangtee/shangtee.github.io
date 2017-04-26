@@ -6,47 +6,30 @@ title: Parallellized Sequential Pattern Mining
     <h1>15-418 Final Project</h1>
     <h2>Parallellized Sequential Pattern Mining</h2>
     <h4>Anna Tan</h4>
-    <a href="proposal.html"><button type="button">Proposal</button></a><button type="button">Checkpoint</button>
+    <a href="proposal.html">Proposal</a>    Checkpoint
     <h3>Summary</h3>
-    <p>We are going to implement two algorithms for sequential pattern mining on multi-core CPU platforms. We would like to parallellize two common data mining algorithms, PrefixSpan and the GSP algorithm. We will evaluate the performance between the sequential implementations and the parallel implementations, as well as among the parallel implementations. </p>
-    <h3>Background</h3>
-    <p>Sequential pattern mining is used to discover statistically relevant patterns in large data sets where the data is assumed to be delivered in sequence. It is used in a wide variety of applications, including consumer behavior discovery, DNA pattern discovery, and natural language categorization.</p>
-    <p>A sequence in a sequence database is an ordered list of sets of items - it would look something like &lt;{a, b}, {c}, {a, c, d}&gt;. In this sequence, a sequential pattern can be &lt;{a}, {c}&gt;, &lt;{c}, {c, d}&gt;, or &lt;{a, b}, {c}, {d}&gt;. A sequential pattern mining algorithm takes as input a sequence database and a minimum support threshold (minsup), to output all sequential patterns having a support at least minsup. </p>
-    <p>PrefixSpan (<a href="http://ieeexplore.ieee.org/document/914830/">Pei et al.</a>) finds these sequential patterns by looking at the prefixes of each sequence and creating pattern-projected database. It appends elements to these sequential patterns one by one, and recursively call the subroutine. </p>
-    <p>The GSP algorithm(<a href="https://pdfs.semanticscholar.org/d420/ea39dc136b9e390d05e964488a65fcf6ad33.pdf">Srikant &amp; Agrawal</a>), on the other hand, generates all possible k-sequences from frequent k-1 sequences by "joining" any two sequences, and then checks how much support each of these sequences has.</p>
-    <p>Because these algorithms may all potentially explore a large number of possible subsequence patterns across a large number of sequences, they can benefit significantly from parallelism. Often, these data mining algorithms run for very long time and bottlenecks the training and prediction phases of the actual machine learning algorithm. Since for each sequential pattern and each data point, we are doing roughly the same amount of work, we hope to exploit the data parallelism and model parallelism in these two algorithms. </p>
-    <h3>Challenges</h3>
-    <ul>
-        <li>Memory Limitation: Because the sequence database is typically very large and we are generating large sets as the algorithms run, we may have inefficient memory utilization when running on large datasets. We may want to consider compression techniques to reduce the amount of data we need to read into memory.</li>
-        <li>In both algorithms, we need to combine the support from different threads to filter out the correct frequent patterns, and then produce a final list of frequent patterns. Depending on how we distribute the workload across threads, this will require communication across threads and usage of shared memory. </li>
-        <li>The algorithms can become computationally heavy if the dataset is large, as generating possible k-sequences and projecting sequences are both done on the dataset. Joining any two sequences can also become a very large task if the number of sequences is large. </li>
-    </ul>
-    <p>For PrefixSpan, there is divergence in that not all sequences are included when creating a projected database based on some prefix sequence. The projected database also vary in size. Therefore, we need to consider balancing the workload. </p>
-    <p>For the GSP algorithm, we have less divergence in execution. The locality is high for memory access.</p>
-    <h3>Resources</h3>
-    <p>I will be using the two papers I referenced in Background as my main source of starting code. Each paper describes the sequential implementation of the algorithm. These algorithms and their parallel versions will be implemented on Gates machines, and run on lateday clusters. </p>
-    <p>In addition, I will be using <a href="http://www.philippe-fournier-viger.com/spmf/index.php?link=datasets.php">this list</a> of sequence datasets to test my algorithms for correctness and performance. This list provides a nice variety of databases in sizes, ranging from 800 sequences to 990 000 sequences. </p>
-    <p>I will need to look into compression techniques related to sequential sequence datasets if memory limitation becomes an issue in my implementations. </p>
+    <p>Over the past two weeks, I worked on implementing the sequential versions of the two algorithms. In particular, I followed the pseudocode as described in the papers linked in the proposal. I have done some basic testing with simple test cases to confirm the correctness the code, although I have not run a full dataset on my implementations. I also started thinking about how to parallelize the algorithms while I am working on the sequential versions, and have written up skeleton code for the parallel implementations. </p>
+    <p>I have also worked on figuring out how to read the datasets from <a href="http://www.philippe-fournier-viger.com/spmf/index.php?link=datasets.php">here</a> In particular, I plan to use the synthetic datasets,data.slen_10.tlen_1.seq.patlen_6.lit.patlen_8.nitems_5000_spmf.txt and data.slen_8.tlen_1.seq.patlen_4.lit.patlen_8.nitems_5000_spmf.txt, as well as Kosarak (10000) to compare the performance of my implementations. Interestingly, most of the datasets listed on the website only have one item per set - all sequences look like &lt;{a}, {b}, {c}, {e}, {d}&gt;, which is not fully using these two algorithms. I can't seem to find any real life datasets that would fully benefit from using these sequential pattern mining algorithms, although I could spend some more time searching around. </p>
     <h3>Goals and Deliverables</h3>
+    <p>I think I'll be on pace to completing my deliverables, but I'm not sure if I'll get to the "nice to haves." Since I will be complete with all my school work other than this project by May 1, I should have a lot of time to focus on my project and complete all the implementations I wish to do. Depending on how quickly I can complete all the implementations, I may look into the "nice to have" goals on the week of the presentations. 
     <p>Plan to Achieve:</p>
     <ul>
         <li>Create parallel implementations on multiple cores that have speedup of at least 4x, in order to have a reasonable mining time on big datasets</li>
         <li>Present results and benchmarks on our parallel implementations' correctness and speed compared to the sequential versions on a few datasets</li>
-    </ul>
-    <p>Hope to Achieve:</p>
-    <ul>
-        <li>Implement a compression technique for large datasets</li>
-        <li>Create parallel implementations that use a cluster of machines or GPU and compare these implementations with the CPU implementations</li>
         <li>Create parallel applications that use the data mining algorithms we have created to see how much speedup we can get for real life applications</li>
     </ul>
-    <h3>Platform of Choice</h3>
-    <p>We will be using C++ as our main programming language, since we want to use OpenMP to parallelize our program. Our code will be run on the latedays cluster to take advantage of the multithreaded CPUs.</p>
+    <h3>Parallelism Competition</h3>
+    <p>I plan to show a graph (or multiple graphs) comparing the sequential versions and parallel versions of the two algorithms running on different datasets. In addition, I think it would also be useful to explain what the algorithms are and maybe demo a simple question detection machine learning model using one of the two algorithms. </p>
+    <h3>Concerns</h3>
+    <p>One of my biggest concerns is that I am not sure where to find good real life datasets that are standard for testing these sequential pattern mining algorithms. I have read a few papers that refer to some datasets, but I can't seem to find them online anywhere.</p>
+    <p>Other than datasets, I think most of the work is just coding and getting my algorithms to work. I can see that there are few different ways of parallelizing, so I may implement all the ways I can think of and compare their speed. </p>
     <h3>Schedule</h3>
     <ul>
-        <li>April 11 - 18: Implement the sequential versions of the algorithms and identify parallelism</li>
-        <li>April 18 - 25: Implement the parallel versions of the algorithms</li>
-        <li>April 25 - May 2: Test the parallel algorithms on different datasets and optimize parallelism </li>
-        <li>May 2 - 9: Finalize Project Report and update site; finish analysis on data</li>
+        <li>April 11 - 18: Implement the sequential versions of the algorithms and identify parallelism</li> (Completed)
+        <li>April 18 - 25: Implement the parallel versions of the algorithms</li> (In Progress)
+        <li>April 25 - April 29: Finish implementing the parallel versions of the algorithms and start testing</li>
+        <li>April 30 - May 2: Continue testing and work on optimization</li>
+        <li>May 3 - 9: Finalize Project Report, update site, upload code to Github; finish analysis on data</li>
     </ul>
 <!---
 
