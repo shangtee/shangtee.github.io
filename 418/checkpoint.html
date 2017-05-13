@@ -6,7 +6,7 @@ title: Parallellized Sequential Pattern Mining
     <h1>15-418 Final Project</h1>
     <h2>Parallellized Sequential Pattern Mining</h2>
     <h4>Anna Tan</h4>
-    <a href="proposal.html">Proposal</a>    Checkpoint
+    <a href="proposal.html">Proposal</a>    Checkpoint <a href="final.html">Final Report</a>
     <h3>Summary</h3>
     <p>Over the past two weeks, I worked on implementing the sequential versions of the two algorithms. In particular, I followed the pseudocode as described in the papers linked in the proposal. I have done some basic testing with simple test cases to confirm the correctness the code, although I have not run a full dataset on my implementations. I also started thinking about how to parallelize the algorithms while I am working on the sequential versions, and have written up skeleton code for the parallel implementations. </p>
     <p>I have also worked on figuring out how to read the datasets from <a href="http://www.philippe-fournier-viger.com/spmf/index.php?link=datasets.php">here</a> In particular, I plan to use the synthetic datasets,data.slen_10.tlen_1.seq.patlen_6.lit.patlen_8.nitems_5000_spmf.txt and data.slen_8.tlen_1.seq.patlen_4.lit.patlen_8.nitems_5000_spmf.txt, as well as Kosarak (10000) to compare the performance of my implementations. Interestingly, most of the datasets listed on the website only have one item per set - all sequences look like &lt;{a}, {b}, {c}, {e}, {d}&gt;, which is not fully using these two algorithms. I can't seem to find any real life datasets that would fully benefit from using these sequential pattern mining algorithms, although I could spend some more time searching around. </p>
